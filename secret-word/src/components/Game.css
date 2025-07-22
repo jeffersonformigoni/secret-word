@@ -48,3 +48,39 @@
   text-align: center;
   margin-right: 1em;
 }
+
+.wordGuessContainer {
+  margin-top: 2em;
+  text-align: center;
+}
+
+.wordguessContainer p {
+  margin-bottom: 0.5em;
+  font-size: bold;
+}
+
+.wordGuessContainer input {
+  height: 45px;
+  width: 250px;
+  font-size: 1.2em;
+  text-align: center;
+  margin-right: 1em;
+  border: 2px solid #ecfa00;
+  border-radius: 5px;
+}
+
+.wordGuessContainer button {
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  background-color: #ecfa00;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.wordGuessContainer button:hover {
+  background-color: #d4db00;
+}

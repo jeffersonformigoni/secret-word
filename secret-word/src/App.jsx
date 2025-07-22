@@ -33,6 +33,8 @@ function App() {
   const [guesses, setGuesses] = useState(guessesQty);
   const [score, setScore] = useState(0);
 
+  const [showWinMessage, setShowWinMessage] = useState(false);
+
   // CLEAR ALL LETTER STATES.
   const clearLettersStates = useCallback(() => {
     setGuessedLetters([]);
@@ -95,21 +97,45 @@ function App() {
     }
   }, [guesses, clearLettersStates]);
 
+  const showVictoryMessageAndNextGame = useCallback(() => {
+    setShowWinMessage(true);
+    setTimeout(() => {
+      setShowWinMessage(false);
+      startGame(); // reinicia o jogo com nova palavra
+    }, 1000); // 1 segundo
+  }, [startGame]);
+
   // CHECK WIN CONDITION.
   useEffect(() => {
-    const uniqueLetters = [...new Set(letters)];
+    if (gameStage !== "game") return; // só executa se estiver no estágio do jogo
 
+    const uniqueLetters = [...new Set(letters)];
     if (guessedLetters.length === uniqueLetters.length) {
       setScore((actualScore) => actualScore + 100);
-      startGame();
+      showVictoryMessageAndNextGame();
     }
-  }, [guessedLetters, letters, startGame]);
+  }, [
+    guessedLetters,
+    letters,
+    startGame,
+    showVictoryMessageAndNextGame,
+    gameStage,
+  ]);
 
   // RESTARTS THE GAME.
   const retry = () => {
     setScore(0);
     setGuesses(guessesQty);
     setGameStage(stages[0].name);
+  };
+
+  const handleWordGuessSuccess = () => {
+    setScore((prevScore) => prevScore + 100);
+    startGame(); // reinicia o jogo com nova palavra
+  };
+
+  const handleWordGuessFailure = () => {
+    setGuesses((prevGuesses) => prevGuesses - 1); // penaliza tentativa
   };
 
   return (
@@ -125,6 +151,9 @@ function App() {
           wrongLetters={wrongLetters}
           guesses={guesses}
           score={score}
+          onWordGuess={handleWordGuessSuccess}
+          onWrongWordGuess={handleWordGuessFailure}
+          showWinMessage={showWinMessage}
         />
       )}
       {gameStage === "end" && <GameOver retry={retry} score={score} />}

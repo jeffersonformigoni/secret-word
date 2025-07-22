@@ -4,3 +4,27 @@
   align-items: center;
   text-align: center;
 }
+
+.win-message {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ecfa00;
+  padding: 2em;
+  border: 3px solid #000;
+  border-radius: 10px;
+  z-index: 999;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #000;
+  animation: fadeInOut 1s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
